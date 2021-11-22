@@ -19,7 +19,7 @@
 
 #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
 
-#define GSPCA_VERSION	"2.14.0"
+#define GSPCA_VERSION	"2.14.1"
 
 #include <linux/init.h>
 #include <linux/version.h>
