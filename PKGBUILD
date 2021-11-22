@@ -21,11 +21,12 @@ source=(
 sha512sums=('SKIP')
 
 package() {
-    install -Dm644 dkms.conf "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/dkms.conf"
+    install -Dm644 "${srcdir}/${_pkgbase}/dkms.conf" "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/dkms.conf"
 
     sed -e "s/@PKGNAME@/${_pkgbase}/g" \
         -e "s/@PKGVER@/${_pkgbase}/g" \
         -i "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/dkms.conf"
 
-    cp -dr --no-preserve='ownership' "${srcdir}/${_pkgbase}" "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/src"
+    mkdir -p "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/src"
+    cp -r "${srcdir}/${_pkgbase}"/{LICENSE,Makefile,README.md,dkms.conf,gspca.c,gspca.h,kinect2.c,kinect2.h} "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/src"
 }

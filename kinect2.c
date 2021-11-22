@@ -52,7 +52,7 @@ static const u32 start_cmd = 0x01;
 static const u32 stop_cmd  = 0x00;
 
 /* request packet for kinect2 sensor */
-struct request {
+struct pkt_request {
 	u32 magic;
 	u32 cmdseq;
 	u32 reply_len;
@@ -66,7 +66,7 @@ struct sd {
 	struct gspca_dev gspca_dev; /* !! must be the first item */
 
 	u32 cmdseq;              /* a sequence number for control commands */
-	struct request request;  /* a buffer for sending control commands */
+	struct pkt_request request;  /* a buffer for sending control commands */
 	u32 response[32];        /* a buffer for receiving response */
 	u8  synced;              /* a flag for sd_depth_pkt_scan() */
 
@@ -115,7 +115,7 @@ static int send_cmd(struct gspca_dev *gspca_dev, u32 cmd,
 {
 	struct sd *sd = (struct sd *) gspca_dev;
 	struct usb_device *udev = gspca_dev->dev;
-	struct request *req = &sd->request;
+	struct pkt_request *req = &sd->request;
 	int actual_len, result = 0;
 	int res, i;
 
