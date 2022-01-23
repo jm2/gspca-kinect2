@@ -23,6 +23,8 @@ sha512sums=('SKIP')
 package() {
     install -Dm644 "${srcdir}/${_pkgbase}/dkms.conf" "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/dkms.conf"
 
+    install -Dm644 "${srcdir}/${_pkgbase}/${_pkgbase}-loopback.service" "${pkgdir}/usr/lib/systemd/system/${_pkgbase}-loopback.service"
+
     sed -e "s/@PKGNAME@/${_pkgbase}/g" \
         -e "s/@PKGVER@/${_pkgbase}/g" \
         -i "${pkgdir}/usr/src/${_pkgbase}-${pkgver}/dkms.conf"

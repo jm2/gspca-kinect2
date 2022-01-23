@@ -1,0 +1,30 @@
+# https://github.com/yoshimoto/gspca-kinect2/pull/8#issuecomment-642292281
+
+[Unit]
+Description=Loopback to enable Kinect v2 compatibility with webcam applications.
+
+[Service]
+ExecStartPre=/bin/modprobe v4l2loopback video_nr=9 card_label="Kinect v2"
+ExecStart=/usr/bin/ffmpeg \
+    -i /dev/video0 \
+    # don't do vsync, for less delay
+    -vsync drop \
+    # drop half the frames, and scale to 720p -- good enough for webcam use
+    # also mirror horizontally for webcam use -- other cams do this intrinsically but we need to do it ourselves
+    -filter:v fps=30,scale=1280:-1,hflip \
+    # good general-purpose pixel format supported by many apps
+    -pix_fmt yuyv422 \
+    # convert the colorspace, so the colors look better (not blown out too much)
+    -color_trc bt709 \
+    -color_primaries bt709 \
+    -color_range tv \
+    # output device format
+    -f v4l2 \
+    # output device
+    /dev/video9
+SuccessExitStatus=255
+Restart=always
+RestartSec=2
+
+[Install]
+WantedBy=default.target
