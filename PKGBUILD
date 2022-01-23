@@ -14,7 +14,8 @@ arch=('i686' 'x86_64')
 depends=('glibc' 'dkms')
 conflicts=("${_pkgbase}")
 optdepends=('linux-headers: Build the module for Arch kernel'
-            'linux-lts-headers: Build the module for LTS Arch kernel')
+            'linux-lts-headers: Build the module for LTS Arch kernel'
+            'v4l2loopback-dkms: Enable webcam compatibility via systemd service')
 source=(
     "git+https://github.com/jm2/gspca-kinect2"
 )
